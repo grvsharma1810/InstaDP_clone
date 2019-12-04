@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>User</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">        
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="/public/js/wheelzoom.js"></script>
+        <script>
+        $( function() {
+            $( "#tabs" ).tabs();
+        } );
+        </script>
+    </head>
+    <body>
+        <div class="container mt-4">
+            <div class="userheader d-flex justify-content-start mb-4">
+                <img class="mr-4" src="<%=user.graphql.user.profile_pic_url%>" alt="Profile Pic" height="80" width="80" style="border-radius: 50%">
+                <div><h4 class="font-weight-bold username"><%=user.graphql.user.username%></h4>
+                    <div class="font-weight-normal"><%=user.graphql.user.edge_followed_by.count%> Followers</div>
+                </div>                                           
+            </div>
+            
+            <div id="tabs" style="margin-bottom: 7%">
+                    <ul>
+                      <li><a href="#tabs-1">Profile</a></li>
+                      <li><a href="#tabs-2">Full Size Profile Picture</a></li>                      
+                    </ul>
+                    <div class="row" id="tabs-1">
+                      <div style="width:30%; padding: 0.5% 0 0.5% 0; margin:auto; text-align:center; border: 2px solid #46b3e6">
+                        <%=user.graphql.user.edge_followed_by.count%>
+                        <br>
+                        <h5 class="font-weight-bold">Followers</h5>
+                      </div>
+                      <div style="width:30%; padding: 0.5% 0 0.5% 0; margin:auto; text-align:center; border: 2px solid #46b3e6">
+                        <%=user.graphql.user.edge_follow.count%>
+                        <br>
+                        <h5 class="font-weight-bold">Following</h5>
+                      </div>
+                      <div style="width:30%; padding: 0.5% 0 0.5% 0; margin:auto; text-align:center; border: 2px solid #46b3e6">
+                        <%=user.graphql.user.edge_owner_to_timeline_media.count%>
+                        <br>
+                        <h5 class="font-weight-bold">Posts</h5>
+                      </div>
+                    </div>
+                    <div id="tabs-2" style="text-align: center">
+                      <img class="zoom" src="<%=user.graphql.user.profile_pic_url_hd%>" alt="Smiley face">
+                      <br>
+                      <p style="margin-top: 5px">Scroll on the photo to zoom</p>
+                      <a id="btn-download" href="<%=user.graphql.user.profile_pic_url_hd%>" download="newname.jpg" target="_blank" class="btn btn-success">Download</a>                      
+                      <script>
+                           var button = document.getElementById('btn-download');
+                            button.addEventListener('click', function (e) {
+                                var dataURL = canvas.toDataURL('image/jpg');
+                                button.href = dataURL;
+                            });
+                            wheelzoom(document.querySelector('img.zoom'));
+                      </script>
+                    </div>                    
+                  </div>
+        </div>
+    </body>
+</html>
